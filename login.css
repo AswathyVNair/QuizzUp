@@ -68,3 +68,16 @@
   font-size: 1rem;
   color: var(--primary-color);
 } */
+
+.signupMessage {
+  font-size: larger;
+  padding-top: 1rem;
+}
+
+.success {
+  color: var(--primary-color);
+}
+
+.error {
+  color: red;
+}

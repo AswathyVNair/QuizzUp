@@ -22,37 +22,39 @@
     </nav>
 
     <main class="login-pg-maincontent">
-      <div class="login-container">
+      <form class="login-container signup">
         <h1>Sign up</h1>
         <div class="input-box">
-          <label for="input-email" class="input-label">Email address</label>
+          <label for="input-email email" class="input-label"
+            >Email address</label
+          >
           <input
             type="email"
             id="input-email"
             class="border-grey input"
             placeholder="johndoe@example.com"
+            name="email"
           />
         </div>
         <div class="input-box">
-          <label for="input-password" class="input-label">Password</label>
+          <label for="input-password password" class="input-label"
+            >Password</label
+          >
           <div class="password-container">
             <input
               type="password"
               id="input-password"
               class="input border-none"
               placeholder="johndoe@example.com"
+              name="password"
             />
-            <!-- <button class="btn-eyefill"><i class="bi bi-eye-fill"></i></button> -->
           </div>
         </div>
-        <!-- <div class="checkbox-container">
-          <label for="checkbox">Remember me</label>
-          <input type="checkbox" id="checkbox" />
-        </div> -->
+
         <button class="btn-login">Sign up</button>
-        <!-- <span>New to QuizUp?</span>
-        <a href="/pages/signup.html">SignUp</a> -->
-      </div>
+        <div class="signupMessage"></div>
+      </form>
     </main>
+    <script src="/dist/bundle.js"></script>
   </body>
 </html>
