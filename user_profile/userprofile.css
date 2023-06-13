@@ -1,0 +1,38 @@
+main {
+  /* background-color: yellow; */
+  text-align: center;
+  padding: 5rem;
+  max-width: 50rem;
+  margin: auto;
+}
+
+h1 {
+  color: var(--primary-color);
+}
+
+.user-name-label {
+  font-size: 1.5rem;
+  color: black;
+}
+
+.username-inputfield {
+  border: 2px solid var(--primary-color);
+  padding: 0.5rem;
+  border-radius: 8px;
+  width: 15rem;
+}
+
+.username-submit-btn {
+  padding: 10px;
+  font-size: 1rem;
+  margin-top: 1rem;
+  border: none;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 8px;
+}
+
+.username-submit-btn:hover {
+  background-color: var(--highlight-color);
+  cursor: pointer;
+}

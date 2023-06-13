@@ -81,3 +81,15 @@
 .error {
   color: red;
 }
+
+.logout-btn {
+  background-color: white;
+  border: none;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+}
+
+.logout-btn:hover {
+  color: var(--highlight-color);
+  cursor: pointer;
+}

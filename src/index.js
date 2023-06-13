@@ -1,6 +1,19 @@
 import { initializeApp } from "firebase/app";
 
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signOut,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  updateProfile,
+} from "firebase/auth";
+
+// Firebase initialization and configuration code here
+
+import { handleSignup } from "./signup";
+import { handleLogIn } from "./login.js";
+import { handleLogOut } from "./login.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCyNxKI-DxY12_LlJZdUaDEVk0C7yf9cms",
@@ -15,31 +28,115 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 const auth = getAuth();
 
-//signing users up
-const signupForm = document.querySelector(".signup");
-signupForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const email = signupForm.email.value;
-  const password = signupForm.password.value;
-
-  const signupMessage = document.querySelector(".signupMessage");
-
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((cred) => {
-      console.log("user created: ", cred.user);
-      signupForm.reset();
-      signupMessage.textContent =
-        "You have successfully registered! Please proceed to the login page to access your account.";
-      signupMessage.classList.remove("error");
-      signupMessage.classList.add("success");
-    })
-    .catch((err) => {
-      console.log(err.message);
-      signupMessage.textContent = "An error occurred during registration.";
-      signupMessage.classList.remove("success");
-      signupMessage.classList.add("error");
+document.addEventListener("DOMContentLoaded", () => {
+  //signing up users
+  const signupForm = document.querySelector(".signup");
+  if (signupForm) {
+    signupForm.addEventListener("submit", (e) => {
+      handleSignup(e, auth, createUserWithEmailAndPassword);
     });
+  }
+
+  //logging in and out
+
+  const logoutBtn = document.querySelector(".logout-btn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      handleLogOut(e, signOut, auth, signInWithEmailAndPassword);
+    });
+  }
+
+  const loginForm = document.querySelector(".login");
+  if (loginForm) {
+    loginForm.addEventListener("submit", (e) => {
+      handleLogIn(e, signOut, auth, signInWithEmailAndPassword);
+    });
+  }
 });
 
-console.log("hello");
+//Taking username
+
+// Get the currently logged-in user
+// const user = getAuth.currentUser;
+const userNameInputField = document.querySelector(".username-inputfield");
+const userNameSubmitBtn = document.querySelector(".username-submit-btn");
+let userNameByUser;
+let user = auth.currentUser;
+const userNameMessg = document.querySelector(".username-messg");
+
+// Showing user the username
+
+if (window.location.pathname == "/user_profile/userprofile.html") {
+  userNameSubmitBtn.addEventListener("click", () => {
+    userNameByUser = userNameInputField.value;
+
+    user = auth.currentUser;
+
+    if (!user.displayName) {
+      updateProfile(user, { displayName: userNameByUser })
+        .then(() => {
+          userNameMessg.innerText = `Username added to user profile successfully. Your username is ${user.displayName}. Kindly reload the page to get into next page`;
+
+          console.log(user.displayName);
+          console.log("Username added to user profile successfully");
+          console.log(user);
+        })
+        .catch((error) => {
+          console.log("Error adding username to user profile:", error);
+        });
+    }
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, you can access the `currentUser` property
+      console.log(user);
+      if (user.displayName) {
+        const userName = user.displayName;
+        console.log("Username: ", userName);
+        window.location.href = "/roleselection/roleselection.html";
+      }
+    } else {
+      console.log("Enter username");
+    }
+  });
+}
+
+// console.log(user);
+
+// onAuthStateChanged(auht, (user) => {
+//   if (user.displayName) {
+//     const userName = user.displayName;
+//     console.log("Username: ", userName);
+//     window.location.href = "/roleselection/roleselection.html";
+//   } else if (userNameInputField.value) {
+//     updateProfile(user, { displayName: userNameInputField.value })
+//       .then(() => {
+//         console.log("Username added to user profile successfully");
+//         console.log(user);
+//       })
+//       .catch((error) => {
+//         console.log("Error adding username to user profile:", error);
+//       });
+//   } else {
+//     console.log("Enter username");
+//   }
+// });
+
+//Check if user's profile has a display name
+
+// if (user.displayName) {
+//   const userName = user.displayName;
+//   console.log("Username: ", userName);
+//   window.location.href = "/roleselection/roleselection.html";
+// } else if (userNameInputField.value) {
+//   updateProfile(user, { displayName: userNameInputField.value })
+//     .then(() => {
+//       console.log("Username added to user profile successfully");
+//     })
+//     .catch((error) => {
+//       console.log("Error adding username to user profile:", error);
+//     });
+// } else {
+//   console.log("Enter username");
+// }
