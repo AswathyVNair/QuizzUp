@@ -12,7 +12,13 @@ export function handleLogOut(e, signOut, auth, signInWithEmailAndPassword) {
 }
 
 //login
-export function handleLogIn(e, signOut, auth, signInWithEmailAndPassword) {
+export function handleLogIn(
+  e,
+  signOut,
+  auth,
+  signInWithEmailAndPassword,
+  user
+) {
   e.preventDefault();
   const loginForm = document.querySelector(".login");
   const email = loginForm.email.value;
